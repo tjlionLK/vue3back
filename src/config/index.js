@@ -18,6 +18,7 @@ const EnvConfig={
 export default {
     env: 'dev',
     mock: true,
+    namespace:'manager',
     ...EnvConfig[env]
     //baseApi: 'www.baidu.com/api' //test-www.baidu.com/api
 }
