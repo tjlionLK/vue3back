@@ -9,6 +9,22 @@ import Welcome from './Welcome.vue'
 export default {
     name: 'login',
     components:{Welcome},
+    mounted(){
+        /*
+        this.$request({
+            method: 'get',
+            url: '/login',
+            data:{
+                name: 'jack'
+            }
+        }).then((res)=>{
+            console.log(res)
+        })
+        */
+        this.$request.get('/login',{name:'jack'},{mock:true,loading:true}).then((res)=>{
+            console.log(res);
+        })
+    },
     methods: {
         goHome(){
             this.$router.push('/welcome')
