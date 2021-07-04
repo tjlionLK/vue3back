@@ -1,6 +1,8 @@
 <template>
-  <h1>weclome to main page{{msg}}</h1>
-  <router-link to="/login">go to login</router-link>
+  <div class="welcome">
+    <h1>weclome to main page{{msg}}</h1>
+    <router-link to="/login">go to login</router-link>
+  </div>
 </template>
 
 <script>
@@ -11,7 +13,8 @@ export default {
 </script>
 
 <style scoped>
-a {
-  color: #42b983;
+.welcome{
+  background: #fff;
+  height:100%;
 }
 </style>

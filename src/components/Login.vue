@@ -1,14 +1,11 @@
 <template>
-    <h1>this is the login page</h1>
-    <Welcome msg="jack"/>
-    <el-button @click="goHome">go back to the welcome page</el-button>
+    <h1>login</h1>
+    <router-link to="/welcome">go to welcome</router-link>
 </template>
 
 <script>
-import Welcome from './Welcome.vue'
 export default {
     name: 'login',
-    components:{Welcome},
     mounted(){
         /*
         this.$request({
@@ -20,15 +17,12 @@ export default {
         }).then((res)=>{
             console.log(res)
         })
-        */
+
         this.$request.get('/login',{name:'jack'},{mock:true,loading:true}).then((res)=>{
             console.log(res);
         })
-    },
-    methods: {
-        goHome(){
-            this.$router.push('/welcome')
-        }
+
+         */
     }
 }
 </script>
