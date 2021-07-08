@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from './../config'
 import {ElMessage} from 'element-plus'
 import router from './../router'
+import storage from './storage'
 
 
 const TOKEN_INVALID = 'Token认证失败，请重新登录'
@@ -14,8 +15,9 @@ const service = axios.create({
 
 service.interceptors.request.use((req) => {
     const headers = req.headers;
+    const { token } = storage.getItem('userInfo') || {};
     if (!headers.Authorization)
-        headers.Authorization = 'Bear Jack'
+        headers.Authorization = 'Bearer ' + token;
     return req;
 })
 
@@ -23,7 +25,7 @@ service.interceptors.response.use((res) => {
     const {code, data, msg} = res.data;
     if (code === 200) {
         return data;
-    } else if (code === 40001) {
+    } else if (code === 50001) {
         ElMessage.error(TOKEN_INVALID)
         setTimeout(() => {
             router.push('/login')
@@ -40,6 +42,9 @@ function request(options) {
     if (options.method.toLowerCase() === 'get') {
         options.params = options.data;
     }
+    if (typeof options.mock != 'undefined') {
+        config.mock = options.mock;
+    }
     if (config.env === 'prod') {
         service.defaults.baseURL = config.baseApi
     } else {
@@ -48,12 +53,12 @@ function request(options) {
     return service(options)
 }
 
-['get','post','put','delete','patch'].forEach((item)=>{
-    request[item]=(url,data,options)=>{
+['get', 'post', 'put', 'delete', 'patch'].forEach((item) => {
+    request[item] = (url, data, options) => {
         return request({
             url,
             data,
-            method:item,
+            method: item,
             ...options
         })
     }
